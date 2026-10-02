@@ -1,0 +1,31 @@
+name: Update Contribution Defender
+
+on:
+  schedule:
+    - cron: '17 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contribution-defender
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out profile
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Fetch public calendar and render both themes
+        run: python3 scripts/build-contribution-game.py --refresh
+      - name: Commit updated arcade
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/contributions.json assets/contribution-defender-dark.svg assets/contribution-defender-light.svg
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Update contribution arcade'
+          git push

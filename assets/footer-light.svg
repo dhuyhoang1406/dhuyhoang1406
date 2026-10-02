@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="70" viewBox="0 0 1200 70" role="img" aria-labelledby="title desc">
+<title id="title">Code. Explore. Build.</title><desc id="desc">Custom developer dashboard for dhuyhoang1406. Decorative animations do not represent live metrics.</desc>
+<defs>
+<linearGradient id="neon" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#087D9D"/><stop offset="1" stop-color="#7951D0"/></linearGradient>
+<radialGradient id="halo"><stop stop-color="#087D9D" stop-opacity=".15"/><stop offset="1" stop-color="#087D9D" stop-opacity="0"/></radialGradient>
+<pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#546C89" stroke-opacity=".07"/></pattern>
+<linearGradient id="scan" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#087D9D" stop-opacity="0"/><stop offset="1" stop-color="#087D9D" stop-opacity=".13"/></linearGradient>
+<style>text{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace} .muted{fill:#546C89} .fg{fill:#172B47} @media(prefers-reduced-motion:reduce){.motion{display:none}}</style>
+</defs><rect x="1" y="1" width="1198" height="68" rx="18" fill="#EDF3FC" stroke="#CDDCEC"/>
+<path d="M20 35H385M815 35H1180" stroke="#CDDCEC"/><text x="600" y="41" fill="#087D9D" font-size="14" text-anchor="middle" letter-spacing="3">CODE. EXPLORE. BUILD.</text></svg>
