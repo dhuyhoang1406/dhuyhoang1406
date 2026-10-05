@@ -70,13 +70,49 @@ for mode in ['dark', 'light']:
     s+=box(384,70,792,348)+header(406,96,'02 / TERMINAL.SESSION',748)
     s+=label(1153,96,'bash',11,muted,'text-anchor="end"')
     s+=label(407,139,'❯ whoami',15,green)
-    s+=label(407,185,'dhuyhoang1406',39,text,'font-weight="700" letter-spacing="-1"')
-    s+=label(409,216,'CODE. EXPLORE. BUILD.',13,cyan,'letter-spacing="3"')
-    s+=label(407,258,'❯ cat profile.json',15,green)
-    for y,k,v in [(288,'github','github.com/dhuyhoang1406'),(315,'portfolio','dhuyhoang1406.github.io'),(342,'stack','React / NestJS / .NET 8')]:
+    # Character-by-character SVG typing, hold, then reverse-order deletion.
+    intro_lines = [
+        "Hi, I'm Dang Huy Hoang.",
+        'About me',
+        'I’m a full-stack developer working primarily with JavaScript',
+        'and TypeScript. I build applications with React, Next.js,',
+        'NestJS, and .NET 8, with a focus on REST APIs, real-time',
+        'features, clean architecture, and automated CI. I’m also',
+        'exploring AI-powered applications through personal projects.',
+    ]
+    intro_x, intro_y, cell, line_height = 407, 161, 9.6, 22
+    letters = [(line_no, column, char) for line_no, line in enumerate(intro_lines)
+               for column, char in enumerate(line)]
+    start_delay, type_step, erase_step, hold = .6, .065, .025, 3.5
+    typed_at = start_delay + len(letters)*type_step
+    erase_start = typed_at + hold
+    erased_at = erase_start + len(letters)*erase_step
+    cycle = erased_at + 1.2
+    s+='<style>.typing-static{display:none}@media(prefers-reduced-motion:reduce){.typing-animated{display:none}.typing-static{display:inline}}</style>'
+    s+='<g class="typing-static">'
+    for row,line in enumerate(intro_lines):
+        s+=label(intro_x,intro_y+row*line_height,line,16,text if row==0 else (violet if row==1 else cyan))
+    s+='</g><g id="typing-intro" class="typing-animated">'
+    for index,(row,column,char) in enumerate(letters):
+        appear = (start_delay+(index+1)*type_step)/cycle
+        disappear = (erase_start+(len(letters)-index)*erase_step)/cycle
+        s+=f'<text x="{intro_x+column*cell:.1f}" y="{intro_y+row*line_height}" font-size="16" fill="{text if row==0 else (violet if row==1 else cyan)}" xml:space="preserve" opacity="1">{escape(char)}<animate attributeName="opacity" values="0;1;0;0" keyTimes="0;{appear:.8f};{disappear:.8f};1" calcMode="discrete" dur="{cycle:.4f}s" repeatCount="indefinite"/></text>'
+    positions=[f'{intro_x} {intro_y-17}']
+    caret_times=[0]
+    for index,(row,column,char) in enumerate(letters):
+        positions.append(f'{intro_x+(column+1)*cell:.1f} {intro_y+row*line_height-17}')
+        caret_times.append((start_delay+(index+1)*type_step)/cycle)
+    for deletion,(row,column,char) in enumerate(reversed(letters)):
+        positions.append(f'{intro_x+column*cell:.1f} {intro_y+row*line_height-17}')
+        caret_times.append((erase_start+(deletion+1)*erase_step)/cycle)
+    positions.append(positions[0])
+    caret_times.append(1)
+    s+=f'<g id="typing-caret" transform="translate({intro_x} {intro_y-17})"><animateTransform attributeName="transform" type="translate" values="{";".join(positions)}" keyTimes="{";".join(f"{v:.8f}" for v in caret_times)}" calcMode="discrete" dur="{cycle:.4f}s" repeatCount="indefinite"/><rect width="2" height="20" fill="{cyan}"><animate attributeName="opacity" values="1;0;1" calcMode="discrete" keyTimes="0;.5;1" dur=".9s" repeatCount="indefinite"/></rect></g></g>'
+    s+=label(407,316,'❯ cat profile.json',15,green)
+    for y,k,v in [(336,'github','github.com/dhuyhoang1406'),(359,'portfolio','dhuyhoang1406.github.io'),(382,'stack','React / NestJS / .NET 8')]:
         s+=label(420,y,k,14,violet)+label(531,y,':',14,muted)+label(552,y,v,14,text)
-    s+=label(407,387,'❯ explore ./repositories',14,green)
-    s+=f'<rect x="657" y="374" width="8" height="17" fill="{cyan}" class="motion"><animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/></rect>'
+    s+=label(407,406,'❯ explore ./repositories',14,green)
+    s+=f'<rect x="635" y="393" width="8" height="17" fill="{cyan}" class="motion"><animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/></rect>'
     # Core technologies supplied by the profile owner.
     s+=box(384,436,490,184)+header(405,464,'03 / CORE.STACK',448)
     for x,y,name,col in [(405,502,'TypeScript',cyan),(631,502,'JavaScript',violet),(405,541,'C# / .NET 8',green),(631,541,'React / Next.js',cyan),(405,580,'Node.js / NestJS',violet),(631,580,'PostgreSQL',green)]:

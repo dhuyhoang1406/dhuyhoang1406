@@ -56,3 +56,9 @@ banner regeneration does not need Pillow. The face-and-shoulders crop preserves 
 mid-density skin strokes, dense white-shirt strokes and dark glasses/tie.
 A plotter reveal and luminous scan band
 animate the vector strokes inside the SVG.
+
+The terminal introduction types the greeting, About me heading and biography,
+pauses, erases in reverse order,
+and repeats. Edit `intro_lines` in `scripts/build-profile.py` to change the text,
+then regenerate the banner. The cursor follows the characters in the SVG,
+and reduced-motion viewers see a static introduction.
