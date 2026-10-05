@@ -6,7 +6,7 @@
 
 <div align="center">
   <br />
-  <a href="https://dhuyhoang1406.github.io/huyhoang.github.io/">
+  <a href="https://dhuyhoang1406.github.io/portfolio/">
     <img src="https://img.shields.io/badge/PORTFOLIO-0C1425?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=22D3EE" alt="Portfolio" />
   </a>
   &nbsp;
