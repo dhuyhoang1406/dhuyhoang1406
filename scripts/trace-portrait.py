@@ -19,18 +19,25 @@ bits=stipple.load()
 a=alpha.load()
 width,height=photo.size
 x0,y0=54,130
-segments=[]
-for y in range(height):
- x=0
- while x<width:
-  if a[x,y]<128 or not bits[x,y]:
-   x+=1
-   continue
-  begin=x
-  while x<width and a[x,y]>=128 and bits[x,y]:x+=1
-  segments.append(f'M{x0+begin} {y0+y}h{x-begin-.25:.2f}')
-# One material-independent violet ink, with luminance encoded by stroke density.
-# Hair has sparse highlights; skin midtones; shirt dense lines; tie/glasses voids.
-path=f'<path d="{"".join(segments)}" stroke="{{violet}}" stroke-opacity=".92" stroke-width=".68"/>'
-(ROOT/'assets/portrait-trace.svg.inc').write_text(path+'\n')
-print(f'Built a face-and-shoulders portrait with {len(segments):,} stippled vector strokes.')
+def trace_strokes(light_theme=False):
+ segments=[]
+ for y in range(height):
+  x=0
+  while x<width:
+   ink = not bool(bits[x,y]) if light_theme else bool(bits[x,y])
+   if a[x,y]<128 or not ink:
+    x+=1
+    continue
+   begin=x
+   while x<width and a[x,y]>=128 and (not bool(bits[x,y]) if light_theme else bool(bits[x,y])):
+    x+=1
+   segments.append(f'M{x0+begin} {y0+y}h{x-begin-.25:.2f}')
+ return segments
+
+for light_theme in (False,True):
+ segments=trace_strokes(light_theme)
+ # Violet light on a dark screen; complementary dark ink on a light screen.
+ path=f'<path d="{"".join(segments)}" stroke="{{violet}}" stroke-opacity=".92" stroke-width=".68"/>'
+ name='portrait-trace-light.svg.inc' if light_theme else 'portrait-trace.svg.inc'
+ (ROOT/'assets'/name).write_text(path+'\n')
+ print(f'Built {name}: {len(segments):,} vector strokes.')

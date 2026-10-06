@@ -9,7 +9,11 @@ portrait_template = (OUT/'portrait-trace.svg.inc').read_text()
 
 for mode in ['dark', 'light']:
     bg, panel, card, text, muted, edge, cyan, violet, green = ('#070C18','#0C1425','#111E32','#EAF2FF','#8C9FBC','#20334D','#22D3EE','#B09AFF','#34D399') if mode == 'dark' else ('#EDF3FC','#F8FAFF','#FFFFFF','#172B47','#546C89','#CDDCEC','#087D9D','#7951D0','#138467')
-    portrait_trace = portrait_template.replace('{cyan}',cyan).replace('{violet}',violet)
+    theme_portrait = (OUT/'portrait-trace-light.svg.inc').read_text() if mode == 'light' else portrait_template
+    portrait_ink = '#352657' if mode == 'light' else violet
+    portrait_trace = theme_portrait.replace('{cyan}',cyan).replace('{violet}',portrait_ink)
+    if mode == 'light':
+        portrait_trace = portrait_trace.replace('stroke-width=".68"','stroke-width=".85"').replace('stroke-opacity=".92"','stroke-opacity="1"')
     def start(w,h,title):
         return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-labelledby="title desc">
 <title id="title">{escape(title)}</title><desc id="desc">Custom developer dashboard for dhuyhoang1406. Decorative animations do not represent live metrics.</desc>

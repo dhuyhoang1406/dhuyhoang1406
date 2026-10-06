@@ -51,7 +51,8 @@ python3 scripts/trace-portrait.py
 python3 scripts/build-profile.py
 ```
 
-The traced path template is stored in `assets/portrait-trace.svg.inc`, so normal
+The traced path templates are stored in `assets/portrait-trace.svg.inc`
+and `assets/portrait-trace-light.svg.inc`, so normal
 banner regeneration does not need Pillow. The face-and-shoulders crop preserves positive luminance: sparse hair highlights,
 mid-density skin strokes, dense white-shirt strokes and dark glasses/tie.
 A plotter reveal and luminous scan band
@@ -62,3 +63,7 @@ pauses, erases in reverse order,
 and repeats. Edit `intro_lines` in `scripts/build-profile.py` to change the text,
 then regenerate the banner. The cursor follows the characters in the SVG,
 and reduced-motion viewers see a static introduction.
+
+The light theme uses complementary dark-ink stippling on white: hair, glasses
+and the tie are dense; skin is medium; the white shirt has sparse marks.
+The dark theme uses luminous strokes with the original brightness ordering.
